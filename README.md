@@ -43,12 +43,35 @@ This documentation outlines the comprehensive data cleaning process undertaken f
 
 - **Result**: The cleaning process yielded approximately 45GB of high-quality text, encompassing around 357 million sentences and 5 billion tokens.
 - **Quality Assessment**: Achieved a classification accuracy of 90% with the KenLM model. However, challenges such as undetected noise (e.g., random Tibetan numbers, repeating characters) were noted for future improvement.
+## Downloading the Dataset Using AWS CLI
+
+To download files from the S3 bucket using the AWS CLI, you can use the `aws s3 cp` command for individual files or `aws s3 sync` to download entire directories. Below are examples of how to download data from each quality class folder:
+
+### Prerequisites
+Ensure you have the AWS CLI installed and configured with the necessary access permissions to the S3 bucket.
+
+### Downloading Files from a Specific Quality Class
+
+- **Class A (Highest Quality):**
+  ```sh
+  aws s3 sync s3://monolingual.data/A/ ./local_directory/A/ --no-sign-request
+  ```
+
+- **Class B (Medium Quality):**
+  ```sh
+  aws s3 sync s3://monolingual.data/B/ ./local_directory/B/ --no-sign-request
+  ```
+
+- **Class C (Lowest Quality, Mostly Noise):**
+  ```sh
+  aws s3 sync s3://monolingual.data/C/ ./local_directory/C/ --no-sign-request
+  ```
+
+Replace `./local_directory/` with the path to the directory on your local machine where you want the files to be downloaded.
 
 ## Notes and Observations
 
 - KenLM's classification sometimes failed to detect certain types of noise, such as sentences with repetitive characters or those with fewer than four syllables.
 - Continuous efforts are being made to refine and improve the cleaning process, especially in detecting and eliminating subtle noise within the data.
 
-## Conclusion
 
-This documentation presents a transparent overview of the methods and tools employed to clean a substantial dataset of Tibetan texts. Through meticulous conversion, filtering, and classification processes, we have significantly enhanced the dataset's quality and utility for linguistic and textual analysis. Future efforts will focus on addressing the identified challenges and further refining the dataset's quality.
