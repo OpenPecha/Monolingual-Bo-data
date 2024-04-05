@@ -46,6 +46,17 @@ This documentation outlines the comprehensive data cleaning process undertaken f
 ## Downloading the Dataset Using AWS CLI
 
 To download files from the S3 bucket using the AWS CLI, you can use the `aws s3 cp` command for individual files or `aws s3 sync` to download entire directories. Below are examples of how to download data from each quality class folder:
+## Storing Cleaned Data on S3
+
+The cleaned dataset is organized into three quality categories (A, B, C) and stored in corresponding folders on Amazon S3. Each folder contains a list of text files with the cleaned and classified text data.
+
+- **S3 Bucket Path**: `s3://monolingual.data/`
+- **Folder Structure**:
+  - `A/`: Contains text files classified as highest quality (Class A).
+  - `B/`: Contains text files classified as medium quality (Class B).
+  - `C/`: Contains text files classified as lowest quality, mostly containing noise (Class C).
+
+The dataset is publicly accessible, allowing for easy download and use.
 
 ### Prerequisites
 Ensure you have the AWS CLI installed and configured with the necessary access permissions to the S3 bucket.
