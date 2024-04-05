@@ -58,9 +58,6 @@ The cleaned dataset is organized into three quality categories (A, B, C) and sto
 
 The dataset is publicly accessible, allowing for easy download and use.
 
-### Prerequisites
-Ensure you have the AWS CLI installed and configured with the necessary access permissions to the S3 bucket.
-
 ### Downloading Files from a Specific Quality Class
 
 - **Class A (Highest Quality):**
