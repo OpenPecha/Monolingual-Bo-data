@@ -82,8 +82,7 @@ Replace `./local_directory/` with the path to the directory on your local machin
 
 ## Notes and Observations
 
-- There are still noice that kenlm failed to detect such as random tibetan numbers in sentences 
-- Kenlm classification fails to detected repeating characters as noice and might show low perplexity score so there are sentences with repeating character
-- Using the sentence segementation there are many sentences that are less then 4 syllables in the data 
-
+- There is still noise that KenLM failed to detect, such as random Tibetan numbers within sentences. This indicates that while the perplexity score-based classification significantly improves text quality, some specific types of noise can still pass through the filter.
+- KenLM classification sometimes fails to detect repeating characters as noise, potentially resulting in lower perplexity scores for such sentences. This means that sentences with repetitive characters may mistakenly be classified as higher quality.
+- The use of sentence segmentation led to the inclusion of many sentences that are less than 4 syllables in length in the dataset. This could affect the overall coherence or usability of the dataset for certain applications where longer textual contexts are needed.
 
