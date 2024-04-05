@@ -1,6 +1,7 @@
 # Data Cleaning Process Documentation
 
 ## Overview
+<img width="1248" alt="Untitled" src="https://github.com/OpenPecha/Monolingual-Bo-data/assets/72848416/e63bc7b5-41b3-4d78-b8e5-463b1c9a5443">
 
 This documentation outlines the comprehensive data cleaning process undertaken for a large monolingual dataset primarily consisting of Tibetan texts. The dataset initially contained various file formats totaling approximately 400GB, including documents from the Openpecha project. Our objective was to standardize the cleaning process to ensure reliability and replicability.
 
