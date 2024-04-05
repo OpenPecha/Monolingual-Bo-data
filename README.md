@@ -82,7 +82,8 @@ Replace `./local_directory/` with the path to the directory on your local machin
 
 ## Notes and Observations
 
-- KenLM's classification sometimes failed to detect certain types of noise, such as sentences with repetitive characters or those with fewer than four syllables.
-- Continuous efforts are being made to refine and improve the cleaning process, especially in detecting and eliminating subtle noise within the data.
+- There are still noice that kenlm failed to detect such as random tibetan numbers in sentences 
+- Kenlm classification fails to detected repeating characters as noice and might show low perplexity score so there are sentences with repeating character
+- Using the sentence segementation there are many sentences that are less then 4 syllables in the data 
 
 
