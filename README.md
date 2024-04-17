@@ -36,7 +36,7 @@ This documentation outlines the comprehensive data cleaning process undertaken f
 
 - **Objective**: Clean OCRed data which contained significant noise.
 - **Research**: Investigated the use of RoBERTa and a method from Meta using KenLM for quality assessment based on perplexity scores ([Meta's approach](https://arxiv.org/pdf/1911.00359.pdf)).
-- **Tools**: Trained a KenLM 5-gram model on 15GB of cleaned data to classify sentences into three quality classes (A, B, C) based on perplexity scores.
+- **Tools**: Trained a KenLM 5-gram model on 15GB of cleaned data to classify sentences into three quality classes (A, B, C) based on perplexity scores. The 15GB data is at s3://openpecha.cleaned/tokenized_raw_text/ It's composed of files from doc and no text from OCR exist here.
 - **Process**: Assigned quality scores to sentences, organizing them into folders based on their classification to segregate data by quality.
 
 ## Final Dataset Composition
@@ -52,7 +52,7 @@ The cleaned dataset is organized into three quality categories (A, B, C) and sto
 
 - **S3 Bucket Path**: `s3://monolingual.data/`
 - **Folder Structure**:
-  - `A/`: Contains text files classified as highest quality (Class A).
+  - `A/`: Contains text files classified as highest quality (Class A). This also contains 15GB of clean data.
   - `B/`: Contains text files classified as medium quality (Class B).
   - `C/`: Contains text files classified as lowest quality, mostly containing noise (Class C).
 
