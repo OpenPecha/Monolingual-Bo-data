@@ -1,0 +1,22 @@
+2026-01-14 11:35:40,475 | WARNING | Botok not installed. Using fallback segmentation.
+2026-01-14 11:35:40,475 | WARNING | Botok not available. Using fallback segmentation.
+2026-01-14 11:35:40,475 | WARNING | Install Botok for better results: pip install botok
+2026-01-14 11:35:40,475 | INFO | Found 2 files to segment
+2026-01-14 11:35:40,583 | WARNING | Botok not installed. Using fallback segmentation.
+2026-01-14 11:35:40,589 | INFO | 
+============================================================
+2026-01-14 11:35:40,590 | INFO | Segmentation Complete
+2026-01-14 11:35:40,590 | INFO | ============================================================
+2026-01-14 11:35:40,590 | INFO | Total files processed: 2
+2026-01-14 11:35:40,590 | INFO | Successfully segmented: 2
+2026-01-14 11:35:40,590 | INFO | Failed: 0
+2026-01-14 11:35:40,590 | INFO | ============================================================
+2026-01-14 11:35:40,590 | INFO | Total sentences found: 9
+2026-01-14 11:35:40,590 | INFO | Sentences passed: 8
+2026-01-14 11:35:40,590 | INFO | Filtered (syllables): 1
+2026-01-14 11:35:40,590 | INFO | Filtered (ratio): 0
+2026-01-14 11:35:40,590 | INFO | Sentence pass rate: 88.89%
+2026-01-14 11:35:40,590 | INFO | ============================================================
+2026-01-14 11:35:40,590 | INFO | Original characters: 347
+2026-01-14 11:35:40,590 | INFO | Output characters: 342
+2026-01-14 11:35:40,590 | INFO | Character retention: 98.56%

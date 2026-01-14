@@ -1,0 +1,14 @@
+2026-01-14 11:35:39,729 | INFO | Found 3 files to filter
+2026-01-14 11:35:39,780 | INFO | 
+============================================================
+2026-01-14 11:35:39,780 | INFO | Unicode Filtering Complete
+2026-01-14 11:35:39,780 | INFO | ============================================================
+2026-01-14 11:35:39,780 | INFO | Total files processed: 3
+2026-01-14 11:35:39,780 | INFO | Successfully filtered: 2
+2026-01-14 11:35:39,780 | INFO | Discarded (low Tibetan): 1
+2026-01-14 11:35:39,780 | INFO | Failed (errors): 0
+2026-01-14 11:35:39,780 | INFO | ============================================================
+2026-01-14 11:35:39,780 | INFO | Original characters: 506
+2026-01-14 11:35:39,780 | INFO | Filtered characters: 347
+2026-01-14 11:35:39,780 | INFO | Character retention: 68.58%
+2026-01-14 11:35:39,780 | INFO | Discarded files logged to: logs/step2_discarded_files.log

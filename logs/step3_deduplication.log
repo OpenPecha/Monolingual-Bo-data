@@ -1,0 +1,19 @@
+2026-01-14 11:35:40,115 | INFO | Found 2 files to deduplicate
+2026-01-14 11:35:40,115 | INFO | Phase 1: Computing MinHash signatures...
+2026-01-14 11:35:40,347 | INFO | Computed signatures for 2 files
+2026-01-14 11:35:40,347 | INFO | Phase 2: Detecting exact duplicates...
+2026-01-14 11:35:40,347 | INFO | Found 0 exact duplicates
+2026-01-14 11:35:40,347 | INFO | Phase 3: Building LSH index and detecting near-duplicates...
+2026-01-14 11:35:40,354 | INFO | Found 0 near-duplicates
+2026-01-14 11:35:40,354 | INFO | Phase 4: Copying unique files to output...
+2026-01-14 11:35:40,355 | INFO | 
+============================================================
+2026-01-14 11:35:40,355 | INFO | Deduplication Complete
+2026-01-14 11:35:40,355 | INFO | ============================================================
+2026-01-14 11:35:40,355 | INFO | Total files processed: 2
+2026-01-14 11:35:40,355 | INFO | Files with valid signatures: 2
+2026-01-14 11:35:40,355 | INFO | Exact duplicates removed: 0
+2026-01-14 11:35:40,355 | INFO | Near-duplicates removed: 0
+2026-01-14 11:35:40,355 | INFO | Unique files retained: 2
+2026-01-14 11:35:40,355 | INFO | Deduplication rate: 0.00%
+2026-01-14 11:35:40,355 | INFO | Duplicate details logged to: logs/step3_duplicates.log

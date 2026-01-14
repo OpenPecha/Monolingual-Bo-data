@@ -1,0 +1,12 @@
+Tibetan Text Quality Classification Summary
+==================================================
+
+Model: None (default scoring)
+Threshold A: PPL ≤ 100
+Threshold B: 100 < PPL ≤ 500
+
+Total sentences: 8
+Class A: 0
+Class B: 8
+Class C: 0
+Average perplexity: 250.00

@@ -1,0 +1,3 @@
+This is purely English text.
+It should be filtered out by the Unicode filtering step.
+No Tibetan content here.

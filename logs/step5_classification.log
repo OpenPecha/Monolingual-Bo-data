@@ -1,0 +1,50 @@
+2026-01-14 11:35:40,640 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:35:40,642 | ERROR | KenLM is required for quality classification.
+2026-01-14 11:35:40,642 | ERROR | Install with: pip install kenlm
+2026-01-14 11:35:40,642 | ERROR | See docs/KENLM_TRAINING.md for model training instructions.
+2026-01-14 11:35:59,620 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:35:59,623 | WARNING | KenLM not installed. Using fallback classification (all sentences -> Class B).
+2026-01-14 11:35:59,623 | WARNING | Install KenLM for actual perplexity-based classification: pip install kenlm
+2026-01-14 11:35:59,623 | WARNING | See docs/KENLM_TRAINING.md for model training instructions.
+2026-01-14 11:35:59,623 | INFO | Found 2 files to classify
+2026-01-14 11:35:59,665 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:35:59,665 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:35:59,673 | INFO | 
+============================================================
+2026-01-14 11:35:59,673 | INFO | Quality Classification Complete
+2026-01-14 11:35:59,673 | INFO | ============================================================
+2026-01-14 11:35:59,673 | INFO | Total files processed: 2
+2026-01-14 11:35:59,673 | INFO | Successfully classified: 0
+2026-01-14 11:35:59,673 | INFO | Failed: 2
+2026-01-14 11:35:59,673 | INFO | ============================================================
+2026-01-14 11:35:59,673 | INFO | Total sentences: 0
+2026-01-14 11:35:59,673 | INFO | ============================================================
+2026-01-14 11:35:59,673 | INFO | Classification Distribution:
+2026-01-14 11:35:59,673 | INFO | ============================================================
+2026-01-14 11:35:59,673 | INFO | Average perplexity: 0.00
+2026-01-14 11:35:59,673 | INFO | Summary written to: data/classified/classification_summary.txt
+2026-01-14 11:35:59,673 | INFO | Failed files logged to: logs/step5_failed_files.log
+2026-01-14 11:36:24,070 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:36:24,073 | WARNING | KenLM not installed. Using fallback classification (all sentences -> Class B).
+2026-01-14 11:36:24,073 | WARNING | Install KenLM for actual perplexity-based classification: pip install kenlm
+2026-01-14 11:36:24,073 | WARNING | See docs/KENLM_TRAINING.md for model training instructions.
+2026-01-14 11:36:24,073 | INFO | Found 2 files to classify
+2026-01-14 11:36:24,118 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:36:24,118 | WARNING | KenLM not installed. Install with: pip install kenlm
+2026-01-14 11:36:24,125 | INFO | 
+============================================================
+2026-01-14 11:36:24,125 | INFO | Quality Classification Complete
+2026-01-14 11:36:24,125 | INFO | ============================================================
+2026-01-14 11:36:24,125 | INFO | Total files processed: 2
+2026-01-14 11:36:24,125 | INFO | Successfully classified: 2
+2026-01-14 11:36:24,125 | INFO | Failed: 0
+2026-01-14 11:36:24,125 | INFO | ============================================================
+2026-01-14 11:36:24,125 | INFO | Total sentences: 8
+2026-01-14 11:36:24,125 | INFO | ============================================================
+2026-01-14 11:36:24,125 | INFO | Classification Distribution:
+2026-01-14 11:36:24,125 | INFO |   Class A (PPL ≤ 100): 0 (0.0%)
+2026-01-14 11:36:24,125 | INFO |   Class B (100 < PPL ≤ 500): 8 (100.0%)
+2026-01-14 11:36:24,125 | INFO |   Class C (PPL > 500): 0 (0.0%)
+2026-01-14 11:36:24,125 | INFO | ============================================================
+2026-01-14 11:36:24,125 | INFO | Average perplexity: 250.00
+2026-01-14 11:36:24,125 | INFO | Summary written to: data/classified/classification_summary.txt

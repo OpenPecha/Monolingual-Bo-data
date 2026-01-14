@@ -1,0 +1,152 @@
+2026-01-14 11:34:22,652 | INFO | 
+============================================================
+2026-01-14 11:34:22,652 | INFO | TIBETAN DATA CLEANING PIPELINE
+2026-01-14 11:34:22,653 | INFO | ============================================================
+2026-01-14 11:34:22,653 | INFO | Start time: 2026-01-14 11:34:22
+2026-01-14 11:34:22,654 | INFO | Input directory: data/raw
+2026-01-14 11:34:22,654 | INFO | Output directory: data
+2026-01-14 11:34:22,655 | INFO | Workers: 4
+2026-01-14 11:34:22,655 | INFO | Steps to run: [1, 2, 3, 4, 5]
+2026-01-14 11:34:22,655 | INFO | 
+Input statistics:
+2026-01-14 11:34:22,656 | INFO |   Files: 3
+2026-01-14 11:34:22,656 | INFO |   Size: 1.16 KB
+2026-01-14 11:34:22,657 | INFO | 
+============================================================
+2026-01-14 11:34:22,657 | INFO | Running Step 1: Format Conversion
+2026-01-14 11:34:22,658 | INFO | ============================================================
+2026-01-14 11:34:22,658 | INFO | Input: data/raw
+2026-01-14 11:34:22,658 | INFO | Output: data/converted
+2026-01-14 11:34:22,659 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step1_format_converter.py --input data/raw --output data/converted --workers 4
+2026-01-14 11:35:39,394 | INFO | 
+============================================================
+2026-01-14 11:35:39,394 | INFO | TIBETAN DATA CLEANING PIPELINE
+2026-01-14 11:35:39,394 | INFO | ============================================================
+2026-01-14 11:35:39,394 | INFO | Start time: 2026-01-14 11:35:39
+2026-01-14 11:35:39,394 | INFO | Input directory: data/raw
+2026-01-14 11:35:39,394 | INFO | Output directory: data
+2026-01-14 11:35:39,394 | INFO | Workers: 2
+2026-01-14 11:35:39,394 | INFO | Steps to run: [1, 2, 3, 4, 5]
+2026-01-14 11:35:39,394 | INFO | 
+Input statistics:
+2026-01-14 11:35:39,394 | INFO |   Files: 3
+2026-01-14 11:35:39,394 | INFO |   Size: 1.16 KB
+2026-01-14 11:35:39,394 | INFO | 
+============================================================
+2026-01-14 11:35:39,394 | INFO | Running Step 1: Format Conversion
+2026-01-14 11:35:39,394 | INFO | ============================================================
+2026-01-14 11:35:39,394 | INFO | Input: data/raw
+2026-01-14 11:35:39,394 | INFO | Output: data/converted
+2026-01-14 11:35:39,394 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step1_format_converter.py --input data/raw --output data/converted --workers 2
+2026-01-14 11:35:39,696 | INFO | ✓ Step 1: Format Conversion completed in 0:00:00
+2026-01-14 11:35:39,696 | INFO | 
+============================================================
+2026-01-14 11:35:39,696 | INFO | Running Step 2: Unicode Filtering
+2026-01-14 11:35:39,696 | INFO | ============================================================
+2026-01-14 11:35:39,696 | INFO | Input: data/converted
+2026-01-14 11:35:39,696 | INFO | Output: data/filtered
+2026-01-14 11:35:39,696 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step2_unicode_filter.py --input data/converted --output data/filtered --workers 2 --min-ratio 0.05
+2026-01-14 11:35:39,789 | INFO | ✓ Step 2: Unicode Filtering completed in 0:00:00
+2026-01-14 11:35:39,789 | INFO | 
+============================================================
+2026-01-14 11:35:39,789 | INFO | Running Step 3: Deduplication
+2026-01-14 11:35:39,789 | INFO | ============================================================
+2026-01-14 11:35:39,789 | INFO | Input: data/filtered
+2026-01-14 11:35:39,789 | INFO | Output: data/deduplicated
+2026-01-14 11:35:39,789 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step3_deduplicator.py --input data/filtered --output data/deduplicated --workers 2 --threshold 0.85
+2026-01-14 11:35:40,385 | INFO | ✓ Step 3: Deduplication completed in 0:00:00
+2026-01-14 11:35:40,385 | INFO | 
+============================================================
+2026-01-14 11:35:40,385 | INFO | Running Step 4: Segmentation
+2026-01-14 11:35:40,385 | INFO | ============================================================
+2026-01-14 11:35:40,385 | INFO | Input: data/deduplicated
+2026-01-14 11:35:40,385 | INFO | Output: data/segmented
+2026-01-14 11:35:40,385 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step4_segmenter.py --input data/deduplicated --output data/segmented --workers 2 --min-syllables 4 --min-tibetan-ratio 0.8
+2026-01-14 11:35:40,609 | INFO | ✓ Step 4: Segmentation completed in 0:00:00
+2026-01-14 11:35:40,610 | INFO | 
+============================================================
+2026-01-14 11:35:40,610 | INFO | Running Step 5: Classification
+2026-01-14 11:35:40,610 | INFO | ============================================================
+2026-01-14 11:35:40,610 | INFO | Input: data/segmented
+2026-01-14 11:35:40,610 | INFO | Output: data/classified
+2026-01-14 11:35:40,610 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step5_classifier.py --input data/segmented --output data/classified --workers 2 --threshold-a 100 --threshold-b 500
+2026-01-14 11:35:40,647 | ERROR | ✗ Step 5: Classification failed with exit code 1
+2026-01-14 11:35:40,647 | ERROR | Pipeline stopped due to failure at Step 5: Classification
+2026-01-14 11:35:40,647 | INFO | 
+============================================================
+2026-01-14 11:35:40,647 | INFO | PIPELINE SUMMARY
+2026-01-14 11:35:40,647 | INFO | ============================================================
+2026-01-14 11:35:40,647 | INFO | Total duration: 0:00:01
+2026-01-14 11:35:40,647 | INFO | Successful steps: 4
+2026-01-14 11:35:40,647 | INFO | Failed steps: 1
+2026-01-14 11:35:40,647 | INFO | 
+Output statistics by stage:
+2026-01-14 11:35:40,647 | INFO |   converted: 3 files, 1.16 KB
+2026-01-14 11:35:40,647 | INFO |   filtered: 2 files, 1.00 KB
+2026-01-14 11:35:40,647 | INFO |   deduplicated: 2 files, 1.00 KB
+2026-01-14 11:35:40,647 | INFO |   segmented: 2 files, 1014.00 B
+2026-01-14 11:35:40,648 | INFO | 
+Classification breakdown:
+2026-01-14 11:35:40,648 | INFO |   Class A: 0 files, 0.00 B
+2026-01-14 11:35:40,648 | INFO |   Class B: 0 files, 0.00 B
+2026-01-14 11:35:40,648 | INFO |   Class C: 0 files, 0.00 B
+2026-01-14 11:35:40,648 | INFO | 
+Step durations:
+2026-01-14 11:35:40,648 | INFO |   ✓ Step 1: Format Conversion: 0:00:00
+2026-01-14 11:35:40,648 | INFO |   ✓ Step 2: Unicode Filtering: 0:00:00
+2026-01-14 11:35:40,648 | INFO |   ✓ Step 3: Deduplication: 0:00:00
+2026-01-14 11:35:40,648 | INFO |   ✓ Step 4: Segmentation: 0:00:00
+2026-01-14 11:35:40,648 | INFO |   ✗ Step 5: Classification: 0:00:00
+2026-01-14 11:35:59,589 | INFO | 
+============================================================
+2026-01-14 11:35:59,589 | INFO | TIBETAN DATA CLEANING PIPELINE
+2026-01-14 11:35:59,589 | INFO | ============================================================
+2026-01-14 11:35:59,589 | INFO | Start time: 2026-01-14 11:35:59
+2026-01-14 11:35:59,589 | INFO | Input directory: data/raw
+2026-01-14 11:35:59,589 | INFO | Output directory: data
+2026-01-14 11:35:59,589 | INFO | Workers: 2
+2026-01-14 11:35:59,589 | INFO | Steps to run: [5]
+2026-01-14 11:35:59,589 | INFO | 
+Input statistics:
+2026-01-14 11:35:59,589 | INFO |   Files: 3
+2026-01-14 11:35:59,589 | INFO |   Size: 1.16 KB
+2026-01-14 11:35:59,589 | INFO | 
+Skipping Step 1: Format Conversion
+2026-01-14 11:35:59,589 | INFO | 
+Skipping Step 2: Unicode Filtering
+2026-01-14 11:35:59,589 | INFO | 
+Skipping Step 3: Deduplication
+2026-01-14 11:35:59,589 | INFO | 
+Skipping Step 4: Segmentation
+2026-01-14 11:35:59,589 | INFO | 
+============================================================
+2026-01-14 11:35:59,589 | INFO | Running Step 5: Classification
+2026-01-14 11:35:59,589 | INFO | ============================================================
+2026-01-14 11:35:59,589 | INFO | Input: data/segmented
+2026-01-14 11:35:59,589 | INFO | Output: data/classified
+2026-01-14 11:35:59,589 | INFO | Command: /usr/local/bin/python /Users/tenzingayche/Monolingual-Bo-data/scripts/step5_classifier.py --input data/segmented --output data/classified --workers 2 --threshold-a 100 --threshold-b 500
+2026-01-14 11:35:59,681 | INFO | ✓ Step 5: Classification completed in 0:00:00
+2026-01-14 11:35:59,682 | INFO | 
+============================================================
+2026-01-14 11:35:59,682 | INFO | PIPELINE SUMMARY
+2026-01-14 11:35:59,682 | INFO | ============================================================
+2026-01-14 11:35:59,682 | INFO | Total duration: 0:00:00
+2026-01-14 11:35:59,682 | INFO | Successful steps: 1
+2026-01-14 11:35:59,682 | INFO | Failed steps: 0
+2026-01-14 11:35:59,682 | INFO | 
+Output statistics by stage:
+2026-01-14 11:35:59,682 | INFO |   converted: 3 files, 1.16 KB
+2026-01-14 11:35:59,682 | INFO |   filtered: 2 files, 1.00 KB
+2026-01-14 11:35:59,682 | INFO |   deduplicated: 2 files, 1.00 KB
+2026-01-14 11:35:59,682 | INFO |   segmented: 2 files, 1014.00 B
+2026-01-14 11:35:59,682 | INFO |   classified: 1 files, 266.00 B
+2026-01-14 11:35:59,682 | INFO | 
+Classification breakdown:
+2026-01-14 11:35:59,682 | INFO |   Class A: 0 files, 0.00 B
+2026-01-14 11:35:59,682 | INFO |   Class B: 0 files, 0.00 B
+2026-01-14 11:35:59,682 | INFO |   Class C: 0 files, 0.00 B
+2026-01-14 11:35:59,682 | INFO | 
+Step durations:
+2026-01-14 11:35:59,682 | INFO |   ✓ Step 5: Classification: 0:00:00
+2026-01-14 11:35:59,682 | INFO | 
+✓ Pipeline completed successfully!

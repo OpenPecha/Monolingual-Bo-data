@@ -1,0 +1,33 @@
+# Tibetan Data Cleaning Pipeline - Requirements
+# =============================================
+
+# Core dependencies
+tqdm>=4.65.0                # Progress bars
+chardet>=5.1.0              # Character encoding detection
+numpy>=1.24.0               # Numerical operations
+
+# Document conversion (Step 1)
+python-docx>=0.8.11         # DOCX file processing
+pdfplumber>=0.9.0           # PDF text extraction
+beautifulsoup4>=4.12.0      # HTML parsing
+lxml>=4.9.0                 # XML/HTML processing
+striprtf>=0.0.26            # RTF file processing
+
+# Deduplication (Step 3)
+datasketch>=1.6.0           # MinHash LSH implementation
+
+# Tibetan text processing (Step 4)
+botok>=0.8.0                # Tibetan word tokenization
+
+# Quality classification (Step 5)
+# KenLM requires separate installation - see docs/KENLM_TRAINING.md
+# pip install https://github.com/kpu/kenlm/archive/master.zip
+kenlm>=0.1                  # Language model perplexity scoring
+
+# Testing dependencies
+pytest>=7.0.0               # Testing framework
+pytest-cov>=4.0.0           # Coverage reporting
+
+# Optional: Development dependencies
+# black>=23.0.0             # Code formatting
+# mypy>=1.0.0               # Type checking

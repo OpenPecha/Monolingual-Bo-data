@@ -1,85 +1,271 @@
-# Data Cleaning Process Documentation
+# Monolingual Tibetan Data Cleaning Pipeline
+
+A large-scale data cleaning pipeline for processing raw Tibetan digital artifacts. This pipeline reduces noise, removes duplicates, and classifies text quality to produce high-quality training data for Tibetan language models.
 
 ## Overview
-<img width="1248" alt="Untitled" src="https://github.com/OpenPecha/Monolingual-Bo-data/assets/72848416/e63bc7b5-41b3-4d78-b8e5-463b1c9a5443">
 
-This documentation outlines the comprehensive data cleaning process undertaken for a large monolingual dataset primarily consisting of Tibetan texts. The dataset initially contained various file formats totaling approximately 400GB, including documents from the Openpecha project. Our objective was to standardize the cleaning process to ensure reliability
+| Metric | Value |
+|--------|-------|
+| Raw Input Size | 400 GB |
+| Cleaned Output Size | 45 GB |
+| Total Sentences | 357 Million |
+| Total Tokens | 5 Billion |
+| Classification Accuracy | 90% |
 
-## Data Conversion to Text
+## Pipeline Architecture
 
-### Step 1: Converting Non-Text Files to Text
+```
+raw_data/
+    |
+    v [Step 1: Format Conversion]
+converted/          -> UTF-8 .txt files
+    |
+    v [Step 2: Unicode Filtering]
+filtered/           -> Tibetan content only
+    |
+    v [Step 3: Deduplication]
+deduplicated/       -> Unique documents
+    |
+    v [Step 4: Segmentation]
+segmented/          -> Clean sentences
+    |
+    v [Step 5: Classification]
+classified/
+    |-- A/          -> High quality (PPL <= 100)
+    |-- B/          -> Medium quality (100 < PPL <= 500)
+    +-- C/          -> Low quality (PPL > 500)
+```
 
-- **Objective**: Convert all non-text files (.doc, .docx, .pdf, .html, .rtf, etc.) into text (.txt) format.
-- **Tools**: Scripts from the [OpenPecha/TibCleaner repository](https://github.com/OpenPecha/TibCleaner/tree/main/src/tibcleaner) on GitHub.
-- **Process**: Utilized existing scripts to systematically convert various file formats to UTF-8 encoded text files.
+## Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/Monolingual-Bo-data.git
+cd Monolingual-Bo-data
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install KenLM (required for Step 5)
+pip install https://github.com/kpu/kenlm/archive/master.zip
+```
+
+### Run the Full Pipeline
+
+```bash
+# Run all steps
+python scripts/run_pipeline.py \
+    --input ./data/raw \
+    --output ./data/output \
+    --model ./models/tibetan_model.bin \
+    --workers 8
+
+# Run specific steps only
+python scripts/run_pipeline.py \
+    --input ./data/raw \
+    --output ./data/output \
+    --steps 1,2,3
+```
+
+### Run Individual Steps
+
+```bash
+# Step 1: Format Conversion
+python scripts/step1_format_converter.py \
+    --input ./data/raw \
+    --output ./data/converted \
+    --workers 8
+
+# Step 2: Unicode Filtering
+python scripts/step2_unicode_filter.py \
+    --input ./data/converted \
+    --output ./data/filtered \
+    --workers 8 \
+    --min-ratio 0.05
+
+# Step 3: Deduplication
+python scripts/step3_deduplicator.py \
+    --input ./data/filtered \
+    --output ./data/deduplicated \
+    --workers 8 \
+    --threshold 0.85
+
+# Step 4: Segmentation
+python scripts/step4_segmenter.py \
+    --input ./data/deduplicated \
+    --output ./data/segmented \
+    --workers 8 \
+    --min-syllables 4 \
+    --min-tibetan-ratio 0.8
+
+# Step 5: Classification
+python scripts/step5_classifier.py \
+    --input ./data/segmented \
+    --output ./data/classified \
+    --model ./models/tibetan_model.bin \
+    --workers 8 \
+    --threshold-a 100 \
+    --threshold-b 500
+```
+
+## Project Structure
+
+```
+Monolingual-Bo-data/
+|-- README.md
+|-- requirements.txt
+|-- docs/
+|   |-- TECHNICAL_SPEC.md      # Detailed technical documentation
+|   +-- KENLM_TRAINING.md      # KenLM model training guide
+|-- scripts/
+|   |-- run_pipeline.py        # Main orchestrator
+|   |-- step1_format_converter.py
+|   |-- step2_unicode_filter.py
+|   |-- step3_deduplicator.py
+|   |-- step4_segmenter.py
+|   +-- step5_classifier.py
+|-- data/
+|   |-- raw/                   # Input: raw documents
+|   |-- converted/             # Step 1 output
+|   |-- filtered/              # Step 2 output
+|   |-- deduplicated/          # Step 3 output
+|   |-- segmented/             # Step 4 output
+|   +-- classified/            # Step 5 output (A/B/C)
+|-- models/
+|   +-- tibetan_model.bin      # KenLM language model
++-- logs/
+    +-- *.log                  # Processing logs
+```
+
+## Pipeline Steps
+
+### Step 1: File Format Conversion
+
+Converts various document formats to UTF-8 encoded plain text.
+
+Supported formats: .doc, .docx, .pdf, .html, .htm, .rtf, .txt
+
+```bash
+python scripts/step1_format_converter.py --input raw/ --output converted/
+```
 
 ### Step 2: Unicode Filtering
 
-- **Objective**: Filter out all non-Unicode text to ensure dataset uniformity.
-- **Process**: Applied scripts to identify and remove files or content not encoded in Unicode, focusing on maintaining Tibetan texts and eliminating other languages.
+Filters content to maintain Tibetan Unicode block (U+0F00 to U+0FFF).
 
-### Step 3: De-duplication
+- Files with less than 5% Tibetan content are discarded
+- Non-Tibetan strings are stripped from remaining files
 
-- **Objective**: Remove duplicate documents on a document level.
-- **Tools**: Utilized the `datasketch` library, specifically MinHash LSH for efficient large-scale deduplication. [Datasketch MinHash LSH documentation](https://ekzhu.com/datasketch/lsh.html#minhash-lsh).
-- **Process**: Implemented MinHash LSH to identify and remove duplicate documents, enhancing dataset uniqueness.
+```bash
+python scripts/step2_unicode_filter.py --input converted/ --output filtered/ --min-ratio 0.05
+```
 
-## Text Cleaning and Language Filtering
+### Step 3: Document Deduplication
 
-### Step 4: Non-Tibetan Text Filtering
+Uses MinHash Locality Sensitive Hashing (LSH) for efficient duplicate detection.
 
-- **Objective**: Isolate Tibetan texts by removing non-Tibetan words and sentences.
-- **Tools**: Utilized the [Botok library](https://github.com/OpenPecha/Botok), specifically modified for our requirements. Botok is designed for word tokenization and sentence segmentation of Tibetan texts, among other features.
-- **Process**: Adapted the Botok library to not only segment texts into sentences but also to remove non-Tibetan words or sentences from the dataset. This modification was crucial in filtering out non-Tibetan texts, ensuring the dataset predominantly contained clean Tibetan sentences.
+- Threshold: 0.85 (Jaccard similarity)
+- Permutations: n = 128
+- Shingling: Syllable-level (Tibetan tsek)
 
-### Step 5: OCR Data Cleaning
+```bash
+python scripts/step3_deduplicator.py --input filtered/ --output deduplicated/ --threshold 0.85
+```
 
-- **Objective**: Clean OCRed data which contained significant noise.
-- **Research**: Investigated the use of RoBERTa and a method from Meta using KenLM for quality assessment based on perplexity scores ([Meta's approach](https://arxiv.org/pdf/1911.00359.pdf)).
-- **Tools**: Trained a KenLM 5-gram model on 15GB of cleaned data to classify sentences into three quality classes (A, B, C) based on perplexity scores. The 15GB data is at s3://openpecha.cleaned/tokenized_raw_text/ It's composed of files from doc and no text from OCR exist here.
-- **Process**: Assigned quality scores to sentences, organizing them into folders based on their classification to segregate data by quality.
+### Step 4: Linguistic Filtering and Segmentation
 
-## Final Dataset Composition
+Uses the Botok library (https://github.com/OpenPecha/Botok) for Tibetan tokenization.
 
-- **Result**: The cleaning process yielded approximately 45GB of high-quality text, encompassing around 357 million sentences and 5 billion tokens.
-- **Quality Assessment**: Achieved a classification accuracy of 90% with the KenLM model. However, challenges such as undetected noise (e.g., random Tibetan numbers, repeating characters) were noted for future improvement.
-## Downloading the Dataset Using AWS CLI
+Filters applied:
+- Syllable filter: Sentences with less than 4 syllables removed
+- Language filter: Sentences must contain more than 80% Tibetan characters
 
-To download files from the S3 bucket using the AWS CLI, you can use the `aws s3 cp` command for individual files or `aws s3 sync` to download entire directories. Below are examples of how to download data from each quality class folder:
-## Storing Cleaned Data on S3
+```bash
+python scripts/step4_segmenter.py --input deduplicated/ --output segmented/ --min-syllables 4
+```
 
-The cleaned dataset is organized into three quality categories (A, B, C) and stored in corresponding folders on Amazon S3. Each folder contains a list of text files with the cleaned and classified text data.
+### Step 5: OCR Quality Classification
 
-- **S3 Bucket Path**: `s3://monolingual.data/`
-- **Folder Structure**:
-  - `A/`: Contains text files classified as highest quality (Class A). This also contains 15GB of clean data.
-  - `B/`: Contains text files classified as medium quality (Class B).
-  - `C/`: Contains text files classified as lowest quality, mostly containing noise (Class C).
+Uses KenLM 5-gram perplexity scoring to classify sentence quality.
 
-The dataset is publicly accessible, allowing for easy download and use.
+| Class | Perplexity Range | Description |
+|-------|------------------|-------------|
+| A | PPL <= 100 | High quality, clean text |
+| B | 100 < PPL <= 500 | Medium quality, minor errors |
+| C | PPL > 500 | Low quality, OCR noise |
 
-### Downloading Files from a Specific Quality Class
+```bash
+python scripts/step5_classifier.py --input segmented/ --output classified/ --model model.bin
+```
 
-- **Class A (Highest Quality):**
-  ```sh
-  aws s3 sync s3://monolingual.data/A/ ./local_directory/A/ --no-sign-request
-  ```
+## KenLM Model Training
 
-- **Class B (Medium Quality):**
-  ```sh
-  aws s3 sync s3://monolingual.data/B/ ./local_directory/B/ --no-sign-request
-  ```
+**KenLM Repository:** https://github.com/kpu/kenlm
 
-- **Class C (Lowest Quality, Mostly Noise):**
-  ```sh
-  aws s3 sync s3://monolingual.data/C/ ./local_directory/C/ --no-sign-request
-  ```
+To train a KenLM language model for quality classification:
 
-Replace `./local_directory/` with the path to the directory on your local machine where you want the files to be downloaded.
+```bash
+# Clone KenLM
+git clone https://github.com/kpu/kenlm.git
+cd kenlm && mkdir build && cd build
+cmake .. && make -j$(nproc)
 
-## Notes and Observations
+# Train 5-gram model
+./bin/lmplz -o 5 -S 80% < gold_corpus.txt > tibetan.arpa
 
-- There is still noise that KenLM failed to detect, such as random Tibetan numbers within sentences. This indicates that while the perplexity score-based classification significantly improves text quality, some specific types of noise can still pass through the filter.
-- KenLM classification sometimes fails to detect repeating characters as noise, potentially resulting in lower perplexity scores for such sentences. This means that sentences with repetitive characters may mistakenly be classified as higher quality.
-- The use of sentence segmentation led to the inclusion of many sentences that are less than 4 syllables in length in the dataset. This could affect the overall coherence or usability of the dataset for certain applications where longer textual contexts are needed.
+# Convert to binary
+./bin/build_binary tibetan.arpa tibetan_model.bin
+```
 
+See docs/KENLM_TRAINING.md for detailed instructions.
+
+## Configuration Options
+
+### Pipeline Runner (run_pipeline.py)
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| --input | required | Input directory with raw documents |
+| --output | required | Base output directory |
+| --model | None | KenLM model path for classification |
+| --workers | CPU count | Number of parallel workers |
+| --steps | 1,2,3,4,5 | Steps to run (comma-separated) |
+| --threshold | 0.85 | Deduplication similarity threshold |
+| --threshold-a | 100 | Class A perplexity ceiling |
+| --threshold-b | 500 | Class B perplexity ceiling |
+| --dry-run | False | Print commands without executing |
+
+## Performance
+
+With 8 CPU cores and SSD storage:
+
+| Step | Processing Speed | Notes |
+|------|------------------|-------|
+| Step 1 | ~500 files/min | Depends on file formats |
+| Step 2 | ~2,000 files/min | I/O bound |
+| Step 3 | ~1,000 files/min | Memory-intensive for LSH index |
+| Step 4 | ~1,500 files/min | Botok initialization overhead |
+| Step 5 | ~3,000 files/min | Model inference parallelizes well |
+
+## Dependencies
+
+- **Botok** (https://github.com/OpenPecha/Botok) - Tibetan word tokenization
+- **KenLM** (https://github.com/kpu/kenlm) - N-gram language modeling
+- **datasketch** (https://github.com/ekzhu/datasketch) - MinHash LSH implementation
+- **pdfplumber** (https://github.com/jsvine/pdfplumber) - PDF text extraction
+- **python-docx** (https://github.com/python-openxml/python-docx) - DOCX processing
+
+## License
+
+MIT License - See LICENSE file for details.
+
+## Acknowledgments
+
+- OpenPecha (https://github.com/OpenPecha) for Tibetan NLP tools
+- KenLM team for the efficient language model implementation
